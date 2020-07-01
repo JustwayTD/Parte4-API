@@ -62,7 +62,7 @@ def update_task(task_id):
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
-    task = [task for task in tasks if task['id'] == task_id]
+    task = [task for task in tasks if task['_id'] == task_id]
     if len(task) == 0:
         abort(404)
     tasks.remove(task[0])
@@ -71,7 +71,7 @@ def delete_task(task_id):
 def make_public_task(task):
     new_task = {}
     for field in task:
-        if field == 'id':
+        if field == '_id':
             new_task['uri'] = url_for('get_task', task_id=task['_id'], _external=True)
         else:
             new_task[field] = task[field]
